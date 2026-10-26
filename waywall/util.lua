@@ -3,14 +3,13 @@ local helpers = require("waywall.helpers")
 
 local M = {}
 
-M.ref_res_mirror = function(options, width, height)
+function M.ref_res_mirror(options, width, height)
     local mirror = nil
 
     local function enable()
         if mirror then
             return
         end
-
         mirror = waywall.mirror(options)
     end
 
@@ -18,14 +17,12 @@ M.ref_res_mirror = function(options, width, height)
         if not mirror then
             return
         end
-
         mirror:close()
         mirror = nil
     end
 
     waywall.listen("resolution", function()
         local active_width, active_height = waywall.active_res()
-
         if active_width == width and active_height == height then
             enable()
         else
@@ -35,7 +32,6 @@ M.ref_res_mirror = function(options, width, height)
 
     return function()
         local active_width, active_height = waywall.active_res()
-
         if active_width == width and active_height == height then
             if mirror then
                 disable()
@@ -46,8 +42,8 @@ M.ref_res_mirror = function(options, width, height)
     end
 end
 
-M.make_res = function(width, height, sens, ingame, ignore_f3, menu_disable)
-    local toggle = helpers.toggle_res(width, height, sens)
+function M.make_res(width, height, sensitivity, require_unpaused, ignore_f3, keep_resolution_in_menus)
+    local toggle = helpers.toggle_res(width, height, sensitivity)
 
     return function()
         if waywall.get_key("F3") and not ignore_f3 then
@@ -55,21 +51,22 @@ M.make_res = function(width, height, sens, ingame, ignore_f3, menu_disable)
         end
 
         local state = waywall.state()
-        local aw, ah = waywall.active_res()
+        local active_width, active_height = waywall.active_res()
+        local allowed = not require_unpaused
+            or (state.screen == "inworld" and state.inworld == "unpaused")
 
-        local ok = (not ingame) or (state.screen == "inworld" and state.inworld == "unpaused")
-        if ok then
+        if allowed then
             toggle()
             return true
-        else
-            if aw ~= 0 and not menu_disable then
-                waywall.set_resolution(0, 0)
-                waywall.set_sensitivity(0)
-                return true
-            end
-
-            return false
         end
+
+        if (active_width ~= 0 or active_height ~= 0) and not keep_resolution_in_menus then
+            waywall.set_resolution(0, 0)
+            waywall.set_sensitivity(0)
+            return true
+        end
+
+        return false
     end
 end
 
