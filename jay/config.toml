@@ -8,8 +8,8 @@ keymap = """
     """
 
 on-startup = [
-    { type = "exec", exec = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'" }
-    { type = "exec", exec = "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'" }
+    { type = "exec", exec = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'" },
+    { type = "exec", exec = "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'" },
 ]
 
 on-graphics-initialized = [
@@ -67,7 +67,7 @@ exec = "i3status"
 ## Outputs
 
 [[outputs]]
-name = main
+name = "main"
 march.serial-number = "HCJW200015"
 mode = {width = 1920, height = 1080, refresh-rate = 239.76 }
 vrr.mode = "never"
