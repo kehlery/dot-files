@@ -1,0 +1,210 @@
+keymap = """
+    xkb_keymap {
+        xkb_keycodes { include "evdev+aliases(qwerty)" };
+        xkb_types    { include "complete"              };
+        xkb_compat   { include "complete"              };
+        xkb_symbols  { include "pc+us+inet(evdev)"     };
+    };
+    """
+
+on-startup = [
+    { type = "exec", exec = "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'" }
+    { type = "exec", exec = "gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'" }
+]
+
+on-graphics-initialized = [
+    { type = "exec", exec = "mako" },
+    { type = "exec", exec = "wl-tray-bridge" },
+    { type = "exec", exec = "i3status" },
+]
+
+
+
+workspace-display-order = "sorted"
+fallback-output-mode = "focus"
+
+
+focus-follows-mouse = false
+middle-click-paste = false
+repeat-rate = { rate = 50, delay = 180}
+user-hardware-cursor = false
+
+## Graphics Init
+
+[[drm-devices]]
+match = { pci-vendor = 0x10de, pci-model = 0x1e87 }
+gfx-api = "Vulkan"
+
+## Inputs
+
+
+
+[[inputs]]
+match.is-pointer = true
+accel-profile = "Flat"
+accel-speed = -0.75
+
+## Environment Variables
+
+[env]
+GTK_THEME = "Adwaita:dark"
+QT_QPA_PLATFORM = "wayland"
+SDL_VIDEODRIVER="wayland"
+CLUTTER_BACKEND="wayland"
+ELECTRON_OZONE_PLATFORM_HINT="wayland"
+XDG_SESSION_TYPE="wayland"
+MOZ_ENABLE_WAYLAND = "1"
+GDM_BACKEND="nvidia-drm"
+__GLX_VENDOR_LIBRARY_NAME="nvidia"
+LIBVA_DRIVER_NAME="nvidia"
+
+## Status Bar
+
+[status]
+format = "i3bar"
+exec = "i3status"
+
+## Outputs
+
+[[outputs]]
+name = main
+march.serial-number = "HCJW200015"
+mode = {width = 1920, height = 1080, refresh-rate = 239.76 }
+vrr.mode = "never"
+tearing.mode = "variant1"
+
+[theme]
+show-bar = true
+show-titles = false
+bar-position = "bottom"
+border-width = 1
+font = "Iosevka Mono 8"
+
+## Colors
+
+bar-status-text-color = "#888888"
+bar-bg-color = "#222222"
+
+[[windows]]
+name = "waywall"
+match.app-id = "waywall"
+match.just-mapped = true
+action = [ { type = "move-to-workspace", name = "4" }, { type = "show-workspace", name = "4" }, "enter-fullscreen" ]
+
+
+[shortcuts]
+
+### Defaults ###
+
+## Windows
+
+F23 = "none"
+F24 = { type = "push-mode", name = "disabled" }
+
+logo-h = "focus-left"
+logo-j = "focus-down"
+logo-k = "focus-up"
+logo-l = "focus-right"
+
+logo-shift-h = "move-left"
+logo-shift-j = "move-down"
+logo-shift-k = "move-up"
+logo-shift-l = "move-right"
+
+logo-d = "split-horizontal"
+logo-v = "split-vertical"
+
+logo-t = "toggle-split"
+logo-m = "toggle-mono"
+logo-u = "toggle-fullscreen"
+# logo-alt-f = "toggle-fullscreen"
+logo-f = "focus-parent"
+logo-c = "open-control-center"
+logo-q = "close"
+alt-x = "toggle-floating"
+
+logo-shift-alt-q = "quit"
+
+ctrl-alt-F1 = { type = "switch-to-vt", num = 1 }
+ctrl-alt-F2 = { type = "switch-to-vt", num = 2 }
+ctrl-alt-F3 = { type = "switch-to-vt", num = 3 }
+ctrl-alt-F4 = { type = "switch-to-vt", num = 4 }
+
+logo-1 = { type = "show-workspace", name = "1" }
+logo-2 = { type = "show-workspace", name = "2" }
+logo-3 = { type = "show-workspace", name = "3" }
+logo-4 = { type = "show-workspace", name = "4" }
+
+logo-shift-1 = { type = "move-to-workspace", name = "1" }
+logo-shift-2 = { type = "move-to-workspace", name = "2" }
+logo-shift-3 = { type = "move-to-workspace", name = "3" }
+logo-shift-4 = { type = "move-to-workspace", name = "4" }
+
+## Applications
+
+logo-Return = { type = "exec", exec = "alacritty" }
+logo-space = { type = "exec", exec = "bemenu-run" }
+
+## Misc
+
+logo-shift-r = "reload-config-toml"
+logo-s = { type = "exec", exec = { prog = "bash", args = [ "-lc", 'grim -g  "$(slurp -d)" - | wl-copy -t image/png' ], privileged = true } }
+
+[modes."disabled".shortcuts]
+
+### Disabled ###
+
+F23 = "pop-mode"
+F24 = "none"
+
+## Windows
+
+logo-h = "none"
+logo-j = "none" 
+logo-k = "none"
+logo-l = "none"
+
+logo-shift-h = "none"
+logo-shift-j = "none"
+logo-shift-k = "none"
+logo-shift-l = "none"
+
+logo-d = "none"
+logo-v = "none"
+
+logo-t = "none"
+logo-m = "none"
+logo-u = "none"
+logo-alt-f = "none"
+logo-f = "none"
+logo-c = "none"
+logo-q = "none"
+alt-x = "none"
+
+logo-shift-alt-q = "none"
+
+ctrl-alt-F1 = "none"
+ctrl-alt-F2 = "none"
+ctrl-alt-F3 = "none"
+ctrl-alt-F4 = "none"
+
+logo-1 = "none"
+logo-2 = "none"
+logo-3 = "none"
+logo-4 = "none"
+
+logo-shift-1 = "none"
+logo-shift-2 = "none"
+logo-shift-3 = "none"
+logo-shift-4 = "none"
+
+## Applications
+
+logo-Return = "none" 
+logo-space = "none"
+
+## Misc
+
+logo-shift-r = "none"
+logo-s = "none" 
+

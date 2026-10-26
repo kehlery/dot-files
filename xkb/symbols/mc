@@ -1,0 +1,27 @@
+// Place this file at ~/.config/xkb/symbols/mc
+partial alphanumeric_keys
+xkb_symbols "basic" {
+    name[Group1]= "Custom Layout";
+    include "us"
+
+
+    key <AE02> { [ 8, 8 ] }; //2
+    key <AE03> { [ U002B, U002B ] }; //3
+
+    key <AD01> { [ s, S ] }; //q
+    key <AD03> { [ o, O ] }; //e
+    key <AB05> { [ r, R ] }; //r
+    key <FK19> { [ g, G ] }; //t
+
+    key <FK21> { [ a, A ] }; //a
+    key <AC02> { [ t, T ] }; //s
+    key <FK20> { [ b, B ] }; //d
+    key <AC04> { [ n, N ] }; //f
+    key <AC05> { [ p, P ] }; //g
+
+    key <AE10> { [ d, D ] }; //z
+    key <AB02> { [ i, I ] }; //x
+    key <AB03> { [ e, E ] }; //c
+    key <AB04> { [ k, K ] }; //v
+
+};
