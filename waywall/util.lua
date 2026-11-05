@@ -3,13 +3,14 @@ local helpers = require("waywall.helpers")
 
 local M = {}
 
-function M.ref_res_mirror(options, width, height)
+M.ref_res_mirror = function(options, width, height)
     local mirror = nil
 
     local function enable()
         if mirror then
             return
         end
+
         mirror = waywall.mirror(options)
     end
 
@@ -17,12 +18,14 @@ function M.ref_res_mirror(options, width, height)
         if not mirror then
             return
         end
+
         mirror:close()
         mirror = nil
     end
 
     waywall.listen("resolution", function()
         local active_width, active_height = waywall.active_res()
+
         if active_width == width and active_height == height then
             enable()
         else
@@ -32,6 +35,7 @@ function M.ref_res_mirror(options, width, height)
 
     return function()
         local active_width, active_height = waywall.active_res()
+
         if active_width == width and active_height == height then
             if mirror then
                 disable()
@@ -46,9 +50,9 @@ function M.make_res(width, height, sensitivity, require_unpaused, ignore_f3, kee
     local toggle = helpers.toggle_res(width, height, sensitivity)
 
     return function()
-        if waywall.get_key("F3") and not ignore_f3 then
-            return false
-        end
+        -- if waywall.get_key("F3") and not ignore_f3 then
+        --     return false
+        -- end
 
         local state = waywall.state()
         local active_width, active_height = waywall.active_res()

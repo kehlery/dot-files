@@ -70,7 +70,7 @@ exec = "i3status"
 name = "main"
 march.serial-number = "HCJW200015"
 mode = {width = 1920, height = 1080, refresh-rate = 239.76 }
-vrr.mode = "never"
+vrr.mode = "always"
 tearing.mode = "variant1"
 
 [theme]
@@ -154,7 +154,7 @@ logo-s = { type = "exec", exec = { prog = "bash", args = [ "-lc", 'grim -g  "$(s
 
 ### Disabled ###
 
-F23 = "pop-mode"
+F8 = "pop-mode"
 F24 = "none"
 
 ## Windows
